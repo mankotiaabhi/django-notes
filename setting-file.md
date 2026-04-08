@@ -447,3 +447,64 @@ A Django `settings.py` file organizes:
 
 Each section is essential to build a secure, maintainable Django project.
 
+## Quick Reference Table
+
+| Setting | Purpose | Example Value | Notes |
+|---------|---------|---------------|-------|
+| `BASE_DIR` | Root directory of the project | `Path(__file__).resolve().parent.parent` | Used as reference for other paths |
+| `SECRET_KEY` | Cryptographic signing key | `os.environ.get('DJANGO_SECRET_KEY')` | Keep secret, use env vars in production |
+| `DEBUG` | Enable detailed error pages | `os.environ.get('DJANGO_DEBUG', '') != 'False'` | Set to False in production |
+| `ALLOWED_HOSTS` | Permitted host/domain names | `['localhost', '127.0.0.1']` | Security measure against host header attacks |
+| `INSTALLED_APPS` | Active applications | `['django.contrib.admin', 'myapp']` | Include Django's built-in and custom apps |
+| `MIDDLEWARE` | Request/response processors | `['django.middleware.security.SecurityMiddleware', ...]` | Order matters, processes requests globally |
+| `ROOT_URLCONF` | Main URL configuration module | `'myproject.urls'` | Points to project's URL routing |
+| `TEMPLATES` | Template engine configuration | `[{ 'BACKEND': 'django.template.backends.django.DjangoTemplates', ... }]` | Configures template directories and processors |
+| `WSGI_APPLICATION` | WSGI callable for servers | `'myproject.wsgi.application'` | Interface for web servers like Gunicorn |
+| `DATABASES` | Database connection settings | `{'default': {'ENGINE': 'django.db.backends.postgresql', ...}}` | Supports multiple databases |
+| `AUTH_PASSWORD_VALIDATORS` | Password strength requirements | `[{'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'}, ...]` | Enforces secure passwords |
+| `LANGUAGE_CODE` | Default language | `'en-us'` | For internationalization |
+| `TIME_ZONE` | Project time zone | `'UTC'` | UTC recommended, converted for users |
+| `USE_I18N` | Enable translation | `True` | Internationalization support |
+| `USE_L10N` | Locale-aware formatting | `True` | Dates/numbers per locale |
+| `USE_TZ` | Timezone-aware datetimes | `True` | Store in UTC, convert for display |
+| `STATIC_URL` | URL prefix for static files | `'/static/'` | CSS, JS, images |
+| `STATICFILES_DIRS` | Development static directories | `[BASE_DIR / 'static']` | Additional static file locations |
+| `STATIC_ROOT` | Production static files directory | `BASE_DIR / 'staticfiles'` | Used by collectstatic command |
+| `MEDIA_URL` | URL prefix for user uploads | `'/media/'` | User-uploaded files |
+| `MEDIA_ROOT` | Directory for user uploads | `BASE_DIR / 'media'` | File storage location |
+| `DEFAULT_AUTO_FIELD` | Default primary key type | `'django.db.models.BigAutoField'` | For models without explicit id |
+
+### Security Settings Quick Reference
+
+| Setting | Purpose | Example | Notes |
+|---------|---------|---------|-------|
+| `SECURE_SSL_REDIRECT` | Force HTTPS | `True` | Redirect HTTP to HTTPS |
+| `SESSION_COOKIE_SECURE` | Secure session cookies | `True` | Only send over HTTPS |
+| `CSRF_COOKIE_SECURE` | Secure CSRF cookies | `True` | Only send over HTTPS |
+| `SECURE_HSTS_SECONDS` | HTTP Strict Transport Security | `31536000` | Force HTTPS for specified time |
+| `SECURE_BROWSER_XSS_FILTER` | Enable XSS filter | `True` | Browser XSS protection |
+| `SECURE_CONTENT_TYPE_NOSNIFF` | Prevent MIME sniffing | `True` | Set X-Content-Type-Options header |
+
+### Default INSTALLED_APPS
+
+| App | Purpose |
+|-----|---------|
+| `django.contrib.admin` | Admin interface |
+| `django.contrib.auth` | User authentication |
+| `django.contrib.contenttypes` | Content type framework |
+| `django.contrib.sessions` | Session management |
+| `django.contrib.messages` | Flash messages |
+| `django.contrib.staticfiles` | Static file handling |
+
+### Default MIDDLEWARE Stack
+
+| Middleware | Purpose |
+|------------|---------|
+| `SecurityMiddleware` | Security headers, HTTPS redirect |
+| `SessionMiddleware` | Session cookie management |
+| `CommonMiddleware` | URL normalization, content-length |
+| `CsrfViewMiddleware` | CSRF protection |
+| `AuthenticationMiddleware` | Attach user to request |
+| `MessageMiddleware` | Flash message support |
+| `XFrameOptionsMiddleware` | Clickjacking protection |
+
